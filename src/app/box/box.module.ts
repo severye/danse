@@ -8,4 +8,5 @@ import { BoxComponent } from './box.component';
   ],
   declarations: [BoxComponent]
 })
-export class BoxModule { }
+export class BoxModule {
+ }
