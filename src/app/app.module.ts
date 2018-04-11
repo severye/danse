@@ -12,19 +12,20 @@ import { KindModule } from './kind/kind.module';
 import { TypeModule } from './type/type.module';
 import { SizeModule } from './size/size.module';
 import { ColorModule } from './color/color.module';
-import { AuthService } from './shared/auth.service';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
+import { CallbackComponent } from './callback/callback.component';
  
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, CallbackComponent
   ],
   imports: [
     BrowserModule,BoxModule,AppRoutingModule,CategoryModule,ProductModule,KindModule,TypeModule,SizeModule,
     ColorModule
   ],
-  providers: [],
+  providers: [AuthService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
-  constructor(private Auth : AuthService){}
 }
