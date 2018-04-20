@@ -11,9 +11,11 @@ export class AuthService {
     autoclose: true,
     allowSignUp: false,
     auth: {
+      clientID: 'DIHvZAXvHEb25_nnfUt1hBc2omau9hYh',
+      domain: 'danse-attitude.eu.auth0.com',
       redirectUrl: AUTH_CONFIG.callbackURL,
       responseType: 'token id_token',
-      audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+      audience: 'localhost:8080',
       params: {
         scope: 'openid'
       }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { BoxService } from './box.service';
+import { ObjectDanse } from '../shared/objectDanse';
 @Component({
   selector: 'app-box',
   templateUrl: './box.component.html',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoxComponent implements OnInit {
 
-  constructor() { }
+  objects: Array<ObjectDanse> = [];
+  constructor(private boxService : BoxService) { }
 
   ngOnInit() {
+    this.boxService.getAllBoxes().subscribe((result:any) => { 
+      this.objects=result.data;
+    },err => console.error(err));
   }
 
 }
