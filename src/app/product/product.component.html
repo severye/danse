@@ -1,3 +1,97 @@
-<p>
-  product works!
-</p>
+    <div class="padding-10">
+    <h3>Gestion des costumes</h3>
+
+    <button class="btn btn-small btn-success" (click)="openDialog()">Ajouter</button>
+    <div class="tab-content alert alert-info wTotal" >
+        <div class="tab-pane active center text-center" *ngIf="objects?.length!=0">
+            <table id="objects" class="table">
+                <thead>
+                <tr>
+                    <th data-toggle="true">
+                        <span>Nom</span>
+                    </th>
+                    <th data-toggle="true">
+                        <span>Image</span>
+                    </th>
+                    <th>
+                        <span>Quantité</span>
+                    </th>
+                    <th>
+                        <span>Commentaire</span>
+                    </th>
+                    <th>
+                        <span>Couleur</span>
+                    </th>
+                    <th>
+                        <span>Modèle</span>
+                    </th>
+                    <th>
+                        <span>Genre</span>
+                    </th>
+                    <th>
+                        <span>Catégorie</span>
+                    </th>
+                    <th>
+                        <span>Malle</span>
+                    </th>
+                    <th>
+                        <span>Modifier</span>
+                    </th>
+                    <th>
+                        <span>Supprimer</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let object of objects">
+                    <td>
+                        {{object.name}}
+                    </td>
+                    <td>
+                        <img *ngIf="object.picture" src="http://localhost:8080/images/{{object.picture}}"/>
+                        <img *ngIf="!object.picture" src="../../assets/images.jpg"/>
+                    </td>
+                    <td>
+                        {{object.totalQuantity}}
+                    </td>
+                    <td class="text-left">
+                        {{object.comment}}
+                    </td>
+                    <td>
+                        <div *ngIf="object.colour">
+                            <div class="colorSquare" [style.background]="object.colour.colorCode" *ngIf="object.colour.colorCode" title="{{object.colour.name}}"></div>
+                            <div class="colorSquare multicolor" *ngIf="!object.colour.colorCode"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="object.type">{{object.type.name}}</div>
+                    </td>
+                    <td>
+                        <div *ngIf="object.kind">{{object.kind.name}}</div>
+                    </td>
+                    <td>
+                        <div *ngIf="object.category">{{object.category.name}}</div>
+                    </td>
+                    <td>
+                        <div *ngIf="object.box">{{object.box.name}}</div>
+                    </td>
+                    <td>
+                    <button class="btn btn-small btn-primary" (click)="openDialog(object)">Modifier</button>
+                </td>
+                <td>
+                    <button *ngIf="object.id" class="btn btn-small btn-danger ng-scope ng-binding status-suspended" (click)="delete(object.id)">
+                        Supprimer
+                    </button>
+                </td>
+            </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="tab-pane active col-md-6" *ngIf="objects?.length==0">
+            Aucun costume référencé
+        </div>
+    </div>
+    
+    <button class="btn btn-small btn-success" (click)="openDialog()">Ajouter</button>
+</div>

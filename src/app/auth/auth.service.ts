@@ -10,6 +10,7 @@ export class AuthService {
   lock = new Auth0Lock(AUTH_CONFIG.clientID, AUTH_CONFIG.domain, {
     autoclose: true,
     allowSignUp: false,
+    
     auth: {
       clientID: 'DIHvZAXvHEb25_nnfUt1hBc2omau9hYh',
       domain: 'danse-attitude.eu.auth0.com',
@@ -17,7 +18,7 @@ export class AuthService {
       responseType: 'token id_token',
       audience: 'localhost:8080',
       params: {
-        scope: 'openid'
+        scope: 'openid profile'
       }
     }
   });
@@ -74,6 +75,9 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    localStorage.setItem('name', authResult.idTokenPayload.email);
+    console.log(authResult);
+    //console.log(localStorage.getItem('access_token'));
   }
 
   public logout(): void {

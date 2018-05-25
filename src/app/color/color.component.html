@@ -1,3 +1,57 @@
-<p>
-  color works!
-</p>
+<div class="padding-10">
+    <h3>Gestion des couleurs</h3>
+
+    <div class="row tab-content alert alert-info" >
+        <div class="tab-pane active col-md-6" *ngIf="objects.length!=0">
+            <table id="objects" class="table">
+                <thead>
+                <tr>
+                    <th data-toggle="true">
+                        <span>Nom</span>
+                    </th>
+                    <th data-toggle="true">
+                        <span>Code</span>
+                    </th>
+                    <th>
+                        <span>Modifier</span>
+                    </th>
+                    <th>
+                        <span>Supprimer</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let object of objects">
+                    <td>
+                        {{object.name}}
+                    </td>
+                    <td>
+                        <div class="colorSquare" [style.background]="object.colorCode" *ngIf="object.colorCode"></div>
+                        <div class="colorSquare multicolor" *ngIf="!object.colorCode"></div>
+                    </td>
+                    <td>
+                    <button class="btn btn-small btn-primary" (click)="openDialog(object)">Modifier</button>
+                </td>
+                <td>
+                    <button *ngIf="object.id" class="btn btn-small btn-danger ng-scope ng-binding status-suspended" (click)="delete(object.id)">
+                        Supprimer
+                    </button>
+                </td>
+            </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="clear"></div>
+        <div class="tab-pane active col-md-6" *ngIf="objects.length==0">
+            Aucune couleur référencée
+        </div>
+        <form class="addObject">
+            <input type="text" [(ngModel)]="colorToAdd.name" required name="name"/>
+            <input id="inputColor" [(colorPicker)]="colorToAdd.colorCode" [style.background]="colorToAdd.colorCode"/>
+            <button (click)="add()" class="btn btn-success ng-scope ng-binding" >
+                Ajouter
+            </button>
+        </form>
+    </div>
+</div>
+

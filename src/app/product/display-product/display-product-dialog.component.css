@@ -1,0 +1,30 @@
+.libelle{
+    font-weight: bold;
+}
+.picture img{
+    max-width: 300px;
+    max-height: 300px;
+}
+mat-dialog-content{
+    margin:0;
+    padding:0;
+}
+
+mat-dialog-container{
+    padding:24px 0;
+}
+.picture{
+    margin:0 10px;
+}
+h3{
+    margin:0 0 10px;
+}
+.colorSquare{
+    margin:0 4px;
+}
+#comment{
+    width:300px;
+}
+#sizeQuantity{
+    margin-left: 20px;
+}

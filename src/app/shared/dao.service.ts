@@ -25,5 +25,13 @@ export class DaoService{
     public getAPI<T>(path: string): Observable<T> {
         return this.httpClient.get<T>(this.getURL() + path, this.getHeaders());
     }
-    
+    public postAPI<T>(path: string,body: Object ): Observable<T> {
+        return this.httpClient.post<T>(this.getURL() + path,JSON.stringify(body), this.getHeaders(),);
+    }
+    public deleteAPI<T>(path: string): Observable<T> {
+        return this.httpClient.delete<T>(this.getURL() + path, this.getHeaders());
+    }
+    public putAPI<T>(path: string,body: Object): Observable<T> {
+        return this.httpClient.put<T>(this.getURL() + path,JSON.stringify(body), this.getHeaders());
+    }
 }

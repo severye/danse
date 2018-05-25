@@ -12,4 +12,16 @@ export class BoxService{
     getAllBoxes(): Observable<ObjectDanse>{
         return this.daoService.getAPI('boxes');
     }
+
+    addBox(box: ObjectDanse): Observable<ObjectDanse>{
+        return this.daoService.postAPI('boxes',box);
+    }
+
+    deleteBox(id:string): Observable<ObjectDanse>{
+        return this.daoService.deleteAPI('boxes/'+id);
+    }
+
+    updateBox(box: ObjectDanse): Observable<ObjectDanse>{
+        return this.daoService.putAPI('boxes/',box);
+    }
 }

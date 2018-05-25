@@ -1,0 +1,50 @@
+.product-box img{
+    max-width: 180px;
+    max-height: 180px;
+}
+
+.selected{
+    border : 2px solid #606060;    
+    box-shadow: inset 0 0 0 1px #fff
+}
+.margin-10{
+    margin: 10px;
+}
+h3{
+    font-size: 14px;
+    font-weight: bold;
+}
+.colorSquare{
+    float: left;
+    margin:2px;
+}
+
+h4{
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+.product-box{
+    float: left;
+    padding:5px;
+    box-shadow: 1px 1px 3px #e3e3e3;
+    margin: 4px;
+    width: 200px;
+    height: 300px;
+}
+
+.green{
+    color:green;
+}
+.red{
+    color:red;
+}
+.picture{
+    height: 180px;
+}
+input[type="number"]{
+    width: 45px;
+}
+#alert{
+    font-size:10px;
+}

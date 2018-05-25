@@ -1,0 +1,62 @@
+
+<div class="left col-md-3">
+    <div>
+        <h3>Nom</h3>
+        <input type="text" [(ngModel)]="searchProduct.name" (ngModelChange)="searchProducts()"/>
+    </div>
+    <div>
+        <h3>Quantité</h3>
+        <input type="number" [(ngModel)]="searchProduct.quantity" (ngModelChange)="searchProducts()"/>
+    </div>
+  <div>
+    <h3>Couleurs</h3>
+    <div *ngFor="let color of colours" >
+        <div [ngClass]="colorSelected.get(color.id)?'selected':''" id="color{{color.id}}" class="colorSquare" [style.background]="color.colorCode" *ngIf="color.colorCode" title="{{color.name}}" (click)="selectColor(color)"></div>
+        <div [ngClass]="colorSelected.get(color.id)?'selected':''" id="color{{color.id}}" class="colorSquare multicolor" *ngIf="!color.colorCode" (click)="selectColor(color)"></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div >
+      <h3>Catégories</h3>
+      <div *ngFor="let category of categories" >
+          <input type="checkbox" (click)="selectCategory($event.target.checked,category)" value="category"/>{{category.name}}
+      </div>
+    </div>
+    <div>
+        <h3>Modèles</h3>
+        <div *ngFor="let type of types" >
+            <input type="checkbox" (click)="selectType($event.target.checked,type)" value="type"/>{{type.name}}
+        </div>
+    </div>
+    <div>
+        <h3>Genres</h3>
+        <div *ngFor="let kind of kinds" >
+            <input type="checkbox" (click)="selectKind($event.target.checked,kind)" value="kind"/>{{kind.name}}
+        </div>
+    </div>
+    <div>
+        <h3>Malles</h3>
+        <div *ngFor="let box of boxes" >
+            <input type="checkbox" (click)="selectBox($event.target.checked,box)" value="box"/>{{box.name}}
+        </div>
+    </div>
+</div>
+<div class="left col-md-9">
+  <div>
+      <div class="product-box text-center"  *ngFor="let object of products">
+            <div (click)="openDialog(object)">
+                <h4>{{object.name}}</h4>
+                <div class="picture">
+                    <img *ngIf="object.picture" src="http://localhost:8080/images/{{object.picture}}"/>
+                    <img *ngIf="!object.picture" src="../../assets/images.jpg"/>
+                </div>
+            </div>    
+            <input type="number" [(ngModel)]="object.quantityAvailable" [disabled]="object.totalQuantity-object.quantityBooked<=0"/>
+            <button [disabled]="object.totalQuantity-object.quantityBooked<=0 ||object.totalQuantity-object.quantityAvailable<=0" (click)="addBook(object)" class="btn btn-success" >Reserver</button>
+            <div id="alert" class="red" *ngIf="object.totalQuantity-object.quantityAvailable<=0">La quantité saisie est supérieur à la quantité disponible</div>
+            <div class="center"><span *ngIf="object.totalQuantity-object.quantityBooked>0" class="green ">Quantité disponible : {{object.totalQuantity-object.quantityBooked}}</span>
+                <span *ngIf="object.totalQuantity-object.quantityBooked<=0" class="red ">Quantité indisponible : {{object.totalQuantity-object.quantityBooked}}</span>
+                /{{object.totalQuantity}}</div>
+      </div>
+  </div>
+</div>

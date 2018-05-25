@@ -1,28 +1,55 @@
-<nav class="navbar navbar-default">
+<nav id="header" class="navbar navbar-default anthracite">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Auth0 - Angular</a>
-  
-        <button
-          class="btn btn-primary btn-margin"
-          routerLink="/">
-            Home
-        </button>
-  
-        <button
-          class="btn btn-primary btn-margin"
-          *ngIf="!auth.isAuthenticated()"
-          (click)="auth.login()">
-            Log In
-        </button>
-  
-        <button
-          class="btn btn-primary btn-margin"
-          *ngIf="auth.isAuthenticated()"
-          (click)="auth.logout()">
-            Log Out
-        </button>
-  
+      <div class="navbar-header wTotal">
+        <h1 class=" left">Danse Attitude</h1>
+        
+        <div *ngIf="auth.isAuthenticated()" id="search" class="left"><a href="/search"><span class="glyphicon glyphicon-search"></span>Rechercher</a></div>
+        <div *ngIf="auth.isAuthenticated()" id="manage" class="dropdown left">
+            <p data-toggle="dropdown">
+                <a><span class="glyphicon glyphicon-cog"></span>Gestion</a></p>
+            <div class="dropdown-menu">
+              <div class="dropdown-item">
+                <a href="/product">Costume</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/type">Modèle</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/color">Couleur</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/category">Catégorie</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/kind">Genre</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/box">Malle</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/size">Taille</a>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="auth.isAuthenticated()" id="book" class="left"><a href="/book"><span class="glyphicon glyphicon-book"></span>Mes réservations</a></div>
+            
+              
+        
+        <div id="connexion" class="right">
+          <a class=""
+              *ngIf="!auth.isAuthenticated()"
+              (click)="auth.login()">     
+          <span class="glyphicon glyphicon-user anthracite"></span> Connexion
+          </a>
+    
+          <a
+              class=""
+                *ngIf="auth.isAuthenticated()"
+                (click)="auth.logout()">
+                  
+          <span class="glyphicon glyphicon-user "></span>Deconnexion
+          </a>
+        </div>
       </div>
     </div>
   </nav>

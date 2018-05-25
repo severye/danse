@@ -1,0 +1,41 @@
+
+<mat-dialog-content>
+    <div class="left picture">
+        <img class="text-center" *ngIf="product.picture" src="http://localhost:8080/images/{{product.picture}}"/>
+        <img *ngIf="!product.picture" src="../../../assets/images.jpg"/>
+    </div>
+    <div class="left">
+        <h3>{{product.name}}</h3>
+        <div *ngIf="product.box"><span class="libelle">Malle de rangement : </span>{{product.box.name}}</div>
+        <div *ngIf="product.comment" id="comment"><span class="libelle">Commentaires : </span>{{product.comment}}<br></div>
+        <span *ngIf="product.totalQuantity" class="libelle">Quantitée totale : </span>{{product.totalQuantity}}<br>
+        <div id="sizeQuantity">
+            <div *ngFor="let sizeQuantity of product.sizeQuantities">
+                <span *ngFor="let size of sizes">
+                    <span *ngIf="size.id==sizeQuantity.idSize">{{size.name}}</span>
+                </span>
+                 : {{sizeQuantity.quantity}}  
+            </div>
+        </div>
+      
+        <div *ngIf="product.colour">
+            <span class="libelle left">Couleur : </span>
+            <div class="colorSquare left" [style.background]="product.colour.colorCode" *ngIf="product.colour.colorCode" title="{{product.colour.name}}"></div>
+            <div class="colorSquare multicolor left" *ngIf="!product.colour.colorCode"></div>{{product.colour.name}}
+        </div>
+
+        <div *ngIf="product.type"><span class="libelle">Modèle : </span>{{product.type.name}}</div>
+        <div *ngIf="product.kind"><span class="libelle">Genre : </span>{{product.kind.name}}</div>
+        <div *ngIf="product.category"><span class="libelle">Catégorie : </span>{{product.category.name}}</div>
+        <div *ngIf="product.productBook"><span class="libelle">Réservation : </span><br/>
+            <span *ngFor="let book of product.productBook">
+                <span *ngIf="!book.endDate">
+                    {{book.user.name}} : {{book.quantity}}<br/>
+                </span>
+            </span>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+        <div class="left wMiddle"><button mat-dialog-close class="btn btn-small btn-light" (click)="close()">Fermer</button></div>
+</mat-dialog-actions>

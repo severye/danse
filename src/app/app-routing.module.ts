@@ -9,15 +9,19 @@ import { ColorComponent } from './color/color.component';
 import { SizeComponent } from './size/size.component';
 import { AuthGuard } from './auth/auth.guard';
 import { CallbackComponent } from './callback/callback.component';
+import { SearchComponent } from './search/search.component';
+import { BookComponent } from './book/book.component';
 
 const routes: Routes = [
   {path: 'box', component : BoxComponent, canActivate: [AuthGuard]},
-      {path: 'category', component : CategoryComponent},
-      {path: 'product', component : ProductComponent},
-      {path: 'kind', component : KindComponent},
-      {path: 'type', component : TypeComponent},
-      {path: 'color', component : ColorComponent},
-      {path: 'size', component : SizeComponent},
+      {path: 'category', component : CategoryComponent, canActivate: [AuthGuard]},
+      {path: 'product', component : ProductComponent, canActivate: [AuthGuard]},
+      {path: 'kind', component : KindComponent, canActivate: [AuthGuard]},
+      {path: 'type', component : TypeComponent, canActivate: [AuthGuard]},
+      {path: 'color', component : ColorComponent, canActivate: [AuthGuard]},
+      {path: 'size', component : SizeComponent, canActivate: [AuthGuard]},
+      {path: 'search', component : SearchComponent, canActivate: [AuthGuard]},
+      {path: 'book', component : BookComponent, canActivate: [AuthGuard]},
       {path: 'callback', component: CallbackComponent }];
 
 @NgModule({
