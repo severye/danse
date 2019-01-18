@@ -1,0 +1,25 @@
+img{
+    max-width: 150px;
+    max-height: 150px;
+    margin:0px 0px 10px;
+}
+.product-box{
+    display: inline-grid;
+    padding:5px;
+    box-shadow: 1px 1px 3px #e3e3e3;
+    margin: 4px;
+    width: 180px;
+    height: 250px;
+}
+button{
+    margin : 10px 0;
+}
+@media screen and (max-width: 767px){
+    #content{
+        text-align: center;
+    }
+}
+.edit a{
+    margin:0;
+    padding:0;
+}

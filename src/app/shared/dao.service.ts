@@ -10,15 +10,15 @@ const httpOptions = {
 @Injectable()
 export class DaoService{
 
-    private httpOptionsAuth = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json','authorization' : 'Bearer ' +  localStorage.getItem('access_token') })
-    };
 
     getURL(): string {
         return environment.back_url;
     }
     getHeaders(){
-        return this.httpOptionsAuth;
+        let httpOptionsAuth = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json','authorization' : 'Bearer ' +  localStorage.getItem('access_token') })
+        };;
+        return httpOptionsAuth;
     }
     constructor(private httpClient: HttpClient){
     }

@@ -1,4 +1,10 @@
 
 #inputColor{
-    width:80px
+    width:40px
+}
+input{
+    width:120px;
+}
+.glyphicon{
+    font-size:10px;
 }

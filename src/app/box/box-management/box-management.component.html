@@ -1,0 +1,35 @@
+<div id="loading" *ngIf="wait">
+    <img id="loading-image" src="/assets/loading.gif" alt="Loading..." />
+</div>
+<div class="padding-10" id="content">
+    <h3>Gestion du contenu des malles</h3>
+    Sélectionner une malle : 
+    <select [(ngModel)]="idBox" (ngModelChange)="selectBox()">
+        <option [ngValue]="0" class="noObject">Sans rangement</option>
+        <option [ngValue]="box.id" *ngFor="let box of boxes">{{box.name}}</option>
+    </select>
+    <div *ngIf="products?.length>0">
+        <div *ngFor="let product of products" class="product-box text-center">
+            <div class="text-center edit"><a href="/product/{{product.id}}" class="btn btn-link text-left" target="_blanck"><span class="glyphicon glyphicon-edit"></span>Modifier le costume</a></div>
+            <div>
+                <span class="bold">{{product.name}}</span>
+                <br/>
+                <img *ngIf="product.picture" src="{{product.picture}}"/>
+                <img *ngIf="!product.picture" src="../../assets/images.jpg"/><br/>
+            </div>
+            <div class="text-left">
+                Malle : 
+                <select [(ngModel)]="product.box.id" (ngModelChange)="changeBoxOfProduct(product)">
+                    <option [ngValue]="box.id" *ngFor="let box of boxes">{{box.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <button class="computer btn btn-success" (click)="refresh()">Rafraichir</button>
+            <button class="mobile btn btn-success" (click)="refresh()"><span class="glyphicon glyphicon-refresh"></span></button>
+        </div>
+    </div>
+    <div *ngIf="(products==null || products.length==0)" class="noObject">
+        Cette malle ne contient aucun costume
+    </div>
+</div>

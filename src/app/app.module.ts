@@ -33,21 +33,34 @@ import { ProductService } from './product/product.service';
 import { AddProductDialogComponent } from './product/add-product/add-product-dialog.component';
 import { SearchComponent } from './search/search.component';
 import { DisplayProductDialogComponent } from './product/display-product/display-product-dialog.component';
+import { BootstrapSwitchModule } from 'angular2-bootstrap-switch';
 
 import { BookComponent } from './book/book.component';
 import { BookService } from './book/book.service';
+import { Utils } from './shared/utils.service';
+import { CloseDialogComponent } from './close-dialog/close-dialog.component';
+import { PictureService } from './picture/picture.service';
+import { SupertypeComponent } from './supertype/supertype.component';
+import { SuperTypeService } from './supertype/supertype.service';
+import { TypeDialogComponent } from './type/type-dialog/type-dialog.component';
+import { BoxManagementComponent } from './box/box-management/box-management.component';
 @NgModule({
   declarations: [
     AppComponent, CallbackComponent,BoxComponent,ObjectDialogComponent,DisplayProductDialogComponent,CategoryComponent,KindComponent,SizeComponent,
-    TypeComponent,ColorComponent,ColorDialogComponent,ProductComponent,AddProductDialogComponent, SearchComponent, BookComponent
+    TypeComponent,ColorComponent,ColorDialogComponent,ProductComponent,AddProductDialogComponent, SearchComponent, BookComponent, CloseDialogComponent,
+    TypeDialogComponent,BoxManagementComponent,
+    SupertypeComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,HttpClientModule,FormsModule,ImageUploadModule.forRoot(),
-    BrowserModule,BrowserAnimationsModule,MaterialModule,CommonModule,FormsModule,ColorPickerModule
+    BrowserModule,BrowserAnimationsModule,MaterialModule,CommonModule,FormsModule,ColorPickerModule,
+    BootstrapSwitchModule.forRoot(),BrowserAnimationsModule
+    
+
   ],
-  providers: [AuthService,AuthGuard,DaoService,BookService,BoxService,CategoryService,KindService,SizeService,TypeService,ColorService,ProductService],
+  providers: [AuthService,AuthGuard,Utils,DaoService,SuperTypeService,PictureService,BookService,BoxService,CategoryService,KindService,SizeService,TypeService,ColorService,ProductService],
   bootstrap: [AppComponent],
-  entryComponents: [ObjectDialogComponent,ColorDialogComponent,AddProductDialogComponent,DisplayProductDialogComponent]
+  entryComponents: [CloseDialogComponent,ObjectDialogComponent,ColorDialogComponent,AddProductDialogComponent,DisplayProductDialogComponent,TypeDialogComponent]
 })
 export class AppModule { 
 }

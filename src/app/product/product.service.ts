@@ -19,6 +19,10 @@ export class ProductService{
         return this.daoService.getAPI('products');
     }
 
+    getProductsByBox(id: string) : Observable<any>{
+        return this.daoService.getAPI('products/boxes/'+id);
+    }
+
     getAllProductsWithQuantitiesBooked(): Observable<any>{
         return this.daoService.getAPI('/products/quantitybooked');
     }

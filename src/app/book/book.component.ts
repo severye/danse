@@ -12,25 +12,32 @@ import { Product } from '../product/product.object';
 export class BookComponent implements OnInit {
 
   books: Array<Book>;
+  wait : boolean;
   constructor(public bookService: BookService, public productService: ProductService) { }
 
   ngOnInit() {
+    this.wait = true;
     this.getAllBookByUser();
   }
 
   getAllBookByUser(){
     this.bookService.getBooks().subscribe((result:any)=>{
       this.books=result.data
-      this.books.forEach(element => {
-        this.productService.getProductById(element.idProduct).subscribe((result:any)=>{
-          element.product=result.data;
-        },err => console.error(err));
-      });
-      console.log(this.books);
+      if(this.books.length>0){
+        this.books.forEach(element => {
+          this.productService.getProductById(element.idProduct).subscribe((result:any)=>{
+            element.product=result.data;
+            this.wait = false;
+          },err => console.error(err));
+        });
+      }else{        
+        this.wait = false;
+      }
     },err => console.error(err));
   }
 
   deleteBook(book){
+    this.wait = true;
     this.bookService.deleteBook(book.id).subscribe((result:any)=>{
         this.getAllBookByUser();
     },err => console.error(err));

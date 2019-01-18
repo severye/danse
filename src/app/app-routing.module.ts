@@ -11,6 +11,9 @@ import { AuthGuard } from './auth/auth.guard';
 import { CallbackComponent } from './callback/callback.component';
 import { SearchComponent } from './search/search.component';
 import { BookComponent } from './book/book.component';
+import { AddProductDialogComponent } from './product/add-product/add-product-dialog.component';
+import { SupertypeComponent } from './supertype/supertype.component';
+import { BoxManagementComponent } from './box/box-management/box-management.component';
 
 const routes: Routes = [
   {path: 'box', component : BoxComponent, canActivate: [AuthGuard]},
@@ -21,9 +24,12 @@ const routes: Routes = [
       {path: 'color', component : ColorComponent, canActivate: [AuthGuard]},
       {path: 'size', component : SizeComponent, canActivate: [AuthGuard]},
       {path: 'search', component : SearchComponent, canActivate: [AuthGuard]},
-      {path: 'book', component : BookComponent, canActivate: [AuthGuard]},
+      {path: 'search/:id', component : SearchComponent, canActivate: [AuthGuard]},
+      {path: 'book', component : BookComponent, canActivate: [AuthGuard]}, 
+      {path: 'super-type', component : SupertypeComponent, canActivate: [AuthGuard]}, 
+      {path: 'box-management', component : BoxManagementComponent, canActivate: [AuthGuard]}, 
+      {path: 'product/:id', component: ProductComponent, canActivate: [AuthGuard] },
       {path: 'callback', component: CallbackComponent }];
-
 @NgModule({
   imports: [
     RouterModule.forRoot(routes)

@@ -1,62 +1,150 @@
 
-<div class="left col-md-3">
-    <div>
-        <h3>Nom</h3>
-        <input type="text" [(ngModel)]="searchProduct.name" (ngModelChange)="searchProducts()"/>
-    </div>
-    <div>
-        <h3>Quantité</h3>
-        <input type="number" [(ngModel)]="searchProduct.quantity" (ngModelChange)="searchProducts()"/>
-    </div>
-  <div>
-    <h3>Couleurs</h3>
-    <div *ngFor="let color of colours" >
-        <div [ngClass]="colorSelected.get(color.id)?'selected':''" id="color{{color.id}}" class="colorSquare" [style.background]="color.colorCode" *ngIf="color.colorCode" title="{{color.name}}" (click)="selectColor(color)"></div>
-        <div [ngClass]="colorSelected.get(color.id)?'selected':''" id="color{{color.id}}" class="colorSquare multicolor" *ngIf="!color.colorCode" (click)="selectColor(color)"></div>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <div >
-      <h3>Catégories</h3>
-      <div *ngFor="let category of categories" >
-          <input type="checkbox" (click)="selectCategory($event.target.checked,category)" value="category"/>{{category.name}}
-      </div>
-    </div>
-    <div>
-        <h3>Modèles</h3>
-        <div *ngFor="let type of types" >
-            <input type="checkbox" (click)="selectType($event.target.checked,type)" value="type"/>{{type.name}}
-        </div>
-    </div>
-    <div>
-        <h3>Genres</h3>
-        <div *ngFor="let kind of kinds" >
-            <input type="checkbox" (click)="selectKind($event.target.checked,kind)" value="kind"/>{{kind.name}}
-        </div>
-    </div>
-    <div>
-        <h3>Malles</h3>
-        <div *ngFor="let box of boxes" >
-            <input type="checkbox" (click)="selectBox($event.target.checked,box)" value="box"/>{{box.name}}
-        </div>
-    </div>
+<div id="loading" *ngIf="wait">
+    <img id="loading-image" src="/assets/loading.gif" alt="Loading..." />
 </div>
-<div class="left col-md-9">
-  <div>
-      <div class="product-box text-center"  *ngFor="let object of products">
+<script>
+    
+</script>
+<div class="left col-sm-3 col-xs-12" id="content">
+    <div id="filter" class="dropdown mobile">
+        <p data-toggle="dropdown" data-width="100%" aria-haspopup="true">
+            <a><span class="glyphicon glyphicon-filter"></span>Filtre</a>
+        </p>
+        <div class="dropdown-menu padding-10" >
+            <div class="dropdown-item">
+                <div class="vertical-top">
+                    <h3>Nom</h3>
+                    <input type="text" [(ngModel)]="searchProduct.name" (ngModelChange)="searchProducts()"/>
+                </div>
+                <div class="vertical-top">
+                    <h3>Quantité</h3>
+                    <input type="number" [(ngModel)]="searchProduct.quantity" (ngModelChange)="searchProducts()"/>  
+                </div>
+                <div class="vertical-top">
+                    <h3>Disponible </h3>
+                    <switch  [status]="searchProduct.available" size="mini" onColor="green"   onText="Oui"    offText="All"  (statusChange)="changeAvailable($event)"></switch> 
+                </div>
+                <div class="vertical-top">
+                    <h3>Couleurs</h3>
+                    <div *ngFor="let color of colours" class="vertical-top" >
+                        <div [ngClass]="colorSelected.get(color.id)?'selected':''" id="color{{color.id}}" class="colorSquare" [style.background]="color.colorCode" *ngIf="color.colorCode" title="{{color.name}}" (click)="selectColor(color)"></div>
+                        <div [ngClass]="colorSelected.get(color.id)?'selected':''" id="color{{color.id}}" class="colorSquare multicolor" *ngIf="!color.colorCode" (click)="selectColor(color)"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="vertical-top">
+                    <h3>Catégories</h3>
+                    <div *ngFor="let category of categories" >
+                        <input type="checkbox" (click)="selectCategory($event.target.checked,category)" value="category"/>{{category.name}}
+                    </div>
+                </div>
+
+                <div class="vertical-top">
+                    <h3>Type de Modèles</h3>
+                    <div *ngFor="let superType of superTypes" >
+                        <input type="checkbox" (click)="selectSuperType($event.target.checked,superType)" value="superType"/>{{superType.name}}
+                    </div>
+                </div>
+                <div class="vertical-top">
+                    <h3>Modèles</h3>
+                    <div *ngFor="let type of types" >
+                        <input type="checkbox" (click)="selectType($event.target.checked,type)" value="type"/>{{type.name}}
+                    </div>
+                </div>
+                <div class="vertical-top">
+                    <h3>Genres</h3>
+                    <div *ngFor="let kind of kinds" >
+                        <input type="checkbox" (click)="selectKind($event.target.checked,kind)" value="kind"/>{{kind.name}}
+                    </div>
+                </div>
+                <div class="vertical-top">
+                    <h3>Malles</h3>
+                    <div *ngFor="let box of boxes" >
+                        <input type="checkbox" (click)="selectBox($event.target.checked,box)" value="box"/>{{box.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="computer">
+            
+            <div>
+                <h3>Nom</h3>
+                <input type="text" [(ngModel)]="searchProduct.name" (ngModelChange)="searchProducts()"/>
+            </div>
+            <div>
+                <h3>Quantité</h3>
+                <input type="number" [(ngModel)]="searchProduct.quantity" (ngModelChange)="searchProducts()"/>  
+            </div>
+            <div>
+                <h3>Afficher uniquement </h3>
+                <switch  [status]="searchProduct.available" size="mini"   onText="Disponible"    offText="Tous"    onColor="green"    (statusChange)="changeAvailable($event)"></switch> 
+            </div>
+            <div>
+                <h3>Couleurs</h3>
+                <div *ngFor="let color of colours" >
+                    <div [ngClass]="colorSelected.get(color.id)?'selected':''" id="color{{color.id}}" class="colorSquare" [style.background]="color.colorCode" *ngIf="color.colorCode" title="{{color.name}}" (click)="selectColor(color)"></div>
+                    <div [ngClass]="colorSelected.get(color.id)?'selected':''" id="color{{color.id}}" class="colorSquare multicolor" *ngIf="!color.colorCode" (click)="selectColor(color)"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div >
+                <h3>Catégories {{check}}</h3>
+                <div *ngFor="let category of categories" >
+                    <input type="checkbox" (click)="selectCategory($event.target.checked,category)" value="category"/>{{category.name}}
+                </div>
+            </div>
+            <div>
+                <h3>Type de Modèles</h3>
+                <div *ngFor="let superType of superTypes" >
+                    <input type="checkbox" (click)="selectSuperType($event.target.checked,superType)" value="superType"/>{{superType.name}}
+                </div>
+            </div>
+            <div *ngIf="typesOfSuperTypes?.length>0">
+                <h3>Modèles</h3>
+                <div *ngFor="let type of typesOfSuperTypes" >
+                    <input type="checkbox" (click)="selectType($event.target.checked,type)" value="type"/>{{type.name}}
+                </div>
+            </div>
+            <div>
+                <h3>Genres</h3>
+                <div *ngFor="let kind of kinds" >
+                    <input type="checkbox" (click)="selectKind($event.target.checked,kind)" value="kind"/>{{kind.name}}
+                </div>
+            </div>
+            <div>
+                <h3>Malles</h3>
+                <div *ngFor="let box of boxes" >
+                    <input type="checkbox" (click)="selectBox($event.target.checked,box)" value="box"/>{{box.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="left col-sm-9" id="products">
+        <div class="product-box text-center"  *ngFor="let object of products">
+            <div class="text-left edit"><a href="/product/{{object.id}}" class="btn btn-link text-left" target="_blanck"><span class="glyphicon glyphicon-edit"></span></a></div>
             <div (click)="openDialog(object)">
                 <h4>{{object.name}}</h4>
                 <div class="picture">
-                    <img *ngIf="object.picture" src="http://localhost:8080/images/{{object.picture}}"/>
+                    <img *ngIf="object.picture" src="{{object.picture}}"/>
                     <img *ngIf="!object.picture" src="../../assets/images.jpg"/>
                 </div>
             </div>    
-            <input type="number" [(ngModel)]="object.quantityAvailable" [disabled]="object.totalQuantity-object.quantityBooked<=0"/>
-            <button [disabled]="object.totalQuantity-object.quantityBooked<=0 ||object.totalQuantity-object.quantityAvailable<=0" (click)="addBook(object)" class="btn btn-success" >Reserver</button>
-            <div id="alert" class="red" *ngIf="object.totalQuantity-object.quantityAvailable<=0">La quantité saisie est supérieur à la quantité disponible</div>
-            <div class="center"><span *ngIf="object.totalQuantity-object.quantityBooked>0" class="green ">Quantité disponible : {{object.totalQuantity-object.quantityBooked}}</span>
-                <span *ngIf="object.totalQuantity-object.quantityBooked<=0" class="red ">Quantité indisponible : {{object.totalQuantity-object.quantityBooked}}</span>
+            <input *ngIf="object.totalQuantity" type="number" [(ngModel)]="object.quantityAvailable" [disabled]="object.totalQuantity-object.quantityBooked<=0"/>
+            <button [disabled]="!isAvailable(object.totalQuantity,object.quantityBooked,object.quantityAvailable)" (click)="addBook(object)" class="btn btn-success" >Reserver</button>
+            <div id="alert" class="red" *ngIf="object.totalQuantity-object.quantityAvailable-object.quantityBooked<0">La quantité saisie est supérieur à la quantité disponible</div>
+            <div class="center" *ngIf="object.totalQuantity"><span *ngIf="isStock(object.totalQuantity,object.quantityBooked)" class="green ">Quantité disponible : {{object.totalQuantity-object.quantityBooked}}</span>
+                <span *ngIf="!isStock(object.totalQuantity,object.quantityBooked)" class="red ">Quantité indisponible : {{object.totalQuantity-object.quantityBooked}}</span>
                 /{{object.totalQuantity}}</div>
-      </div>
-  </div>
-</div>
+            <div class="center noObject" *ngIf="!object.totalQuantity">quantité non renseignée</div>
+        </div>
+        <div *ngIf="products?.length==0" class="noObject">
+        Aucun costume ne correspond à cette recherche
+        </div>
+    </div>
+      
+    <script>
+    $(document).ready(function () {
+        $(".dropdown-menu").show();
+    });
+    </script>

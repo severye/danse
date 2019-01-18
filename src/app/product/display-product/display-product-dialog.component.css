@@ -3,7 +3,6 @@
 }
 .picture img{
     max-width: 300px;
-    max-height: 300px;
 }
 mat-dialog-content{
     margin:0;
@@ -27,4 +26,12 @@ h3{
 }
 #sizeQuantity{
     margin-left: 20px;
+}
+#quantity{
+    margin-top:20px;
+}
+@media screen and (min-width: 768px){
+    .picture img{
+        width:300px;
+    }
 }

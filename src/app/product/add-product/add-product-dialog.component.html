@@ -10,9 +10,17 @@
             </span> </span>
     </div>      
     <div>
-        <span>Image : </span>
+        <span>Image principale : </span>
         <span>
-            <image-upload [max]="2" (removed)="onRemoved($event)" (uploadStateChanged)="onUploadStateChanged($event)" (uploadFinished)="onUploadFinished($event)" url="http://localhost:8080/images" buttonCaption="Selectionner une image" clearButtonCaption="supprimer" [uploadedFiles]="path"></image-upload>
+            <image-upload [max]="2" (removed)="onRemoved($event)" (uploadStateChanged)="onUploadStateChanged($event)" (uploadFinished)="onUploadFinished($event)" url="http://danse-attitude-costume.us-east-2.elasticbeanstalk.com/pictures" buttonCaption="Selectionner une image" clearButtonCaption="supprimer" [uploadedFiles]="path"></image-upload>
+            <!--<image-upload [max]="1" (removed)="onRemoved($event)" (uploadStateChanged)="onUploadStateChanged($event)" (uploadFinished)="onUploadFinished($event)" url="http://localhost:8080/pictures" buttonCaption="Selectionner une image" clearButtonCaption="supprimer" [uploadedFiles]="path"></image-upload>-->
+        </span>
+    </div>
+    <div>
+        <span>Autres images : </span>
+        <span>
+            <image-upload (removed)="onRemovedPictures($event)" (uploadStateChanged)="onUploadStateChanged($event)" (uploadFinished)="onUploadPicturesFinished($event)" url="http://danse-attitude-costume.us-east-2.elasticbeanstalk.com/pictures" buttonCaption="Selectionner une image" clearButtonCaption="supprimer" [uploadedFiles]="paths"></image-upload>
+            <!--<image-upload (removed)="onRemovedPictures($event)" (uploadStateChanged)="onUploadStateChanged($event)" (uploadFinished)="onUploadPicturesFinished($event)" url="http://localhost:8080/pictures" buttonCaption="Selectionner une image" clearButtonCaption="supprimer" [uploadedFiles]="paths"></image-upload>-->
         </span>
     </div>
     <div>
@@ -31,6 +39,7 @@
                 
                 <span *ngFor="let sizeQuantity of product.sizeQuantities">
                     <select [(ngModel)]="sizeQuantity.idSize"  class="selectpicker size" disabled >
+                        <option></option>
                         <option *ngFor="let size of sizes" [ngValue]="size.id" >{{size.name}}</option>
                     </select>
                     <input type="number" name="quantity" [(ngModel)]="sizeQuantity.quantity" (ngModelChange)="changeQuantity()"/>  
@@ -54,16 +63,26 @@
     </div>
     
     <div class="left">
-        <span>Color : </span>
+        <span>Couleur : </span>
         <span>
             <select  [(ngModel)]="product.colour.id" class="selectpicker">
+                <option></option>
                 <option *ngFor="let color of colors" [ngValue]="color.id" [ngStyle]="{'background-color':color.colorCode}">{{color.name}}</option>
             </select>      
         </span>
     </div>
     <div class="left">
+        <span>Type de modèle : </span>
+        <span><select  [(ngModel)]="product.type?.superType.id" class="selectpicker" (ngModelChange)="changeOnSuperType()">
+                <option></option>
+                <option *ngFor="let superType of superTypes" [ngValue]="superType.id">{{superType.name}}</option>
+            </select>   
+        </span>
+    </div>
+    <div class="left" *ngIf="types.length>0">
         <span>Modèle : </span>
         <span><select  [(ngModel)]="product.type.id" class="selectpicker">
+                <option></option>
                 <option *ngFor="let type of types" [ngValue]="type.id">{{type.name}}</option>
                 </select>   
         </span>
@@ -71,6 +90,7 @@
     <div class="left">
         <span>Genre : </span>
         <span><select  [(ngModel)]="product.kind.id" class="selectpicker">
+                <option></option>
                 <option *ngFor="let kind of kinds" [ngValue]="kind.id">{{kind.name}}</option>
                 </select>   
         </span>
@@ -78,6 +98,7 @@
     <div class="left">
         <span>Categorie : </span>
         <span><select  [(ngModel)]="product.category.id" class="selectpicker">
+                <option></option>
                 <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
                 </select>   
         </span>
@@ -85,13 +106,36 @@
     <div class="left">
         <span>Malle : </span>
         <span><select  [(ngModel)]="product.box.id" class="selectpicker">
+                <option></option>
                 <option *ngFor="let box of boxes" [ngValue]="box.id">{{box.name}}</option>
                 </select>   
         </span>
     </div>
 </mat-dialog-content>
 
-<mat-dialog-actions class="wTotal">
-        <div class="col-xs-5 left"><button mat-dialog-close class="btn btn-small btn-light " (click)="close()">Fermer</button></div>
-        <div class="col-xs-6 right"><button [disabled]="" class="btn btn-success btn-small right"(click)="save()" [disabled]="!show || (product.name==null)" id="validate">Valider</button></div>
+<mat-dialog-actions class="wTotal " id="productButtons">
+        <div class="col-xs-3 text-center">
+            <button mat-dialog-close class="btn btn-small btn-light " (click)="close()">
+                <span class="computer">Fermer</span>
+                <span class="glyphicon glyphicon-remove mobile"></span>
+            </button>
+        </div>
+        <div class="col-xs-3 text-center">
+            <button *ngIf="product.id" mat-dialog-close class="btn btn-small btn-danger " (click)="deleteDialog(product.id)">
+                <span class="computer">Supprimer</span>
+                <span class="glyphicon glyphicon-trash mobile"></span>
+            </button>
+        </div>        
+        <div class="col-xs-3 text-center">
+            <a href="search/{{product.id}}" *ngIf="product.id" mat-dialog-close class="btn btn-small btn-primary ">
+                <span class="computer">Réserver</span>
+                <span class="glyphicon glyphicon-book mobile"></span>
+            </a>
+        </div>
+        <div class="col-xs-3 text-center">
+            <button [disabled]="" class="btn btn-success btn-small"(click)="save()" [disabled]="!show || (product.name==null)" id="validate">
+                <span class="computer">Valider</span>
+                <span class="glyphicon glyphicon-ok mobile"></span>
+            </button>
+        </div>
 </mat-dialog-actions>

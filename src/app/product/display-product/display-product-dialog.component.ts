@@ -4,6 +4,8 @@ import { Product } from "../product.object";
 import { AddProductDialogComponent } from "../add-product/add-product-dialog.component";
 import { SizeService } from "../../size/size.service";
 import { ObjectDanse } from "../../shared/objectDanse";
+import { Utils } from "../../shared/utils.service";
+import { Book } from "../../book/book.object";
 
 @Component({
     selector: 'display-product-dialog',
@@ -12,14 +14,19 @@ import { ObjectDanse } from "../../shared/objectDanse";
   })
 export class DisplayProductDialogComponent implements OnInit {
 
-    
+    booksNotFinish : Array<Book> = [];
     sizes : Array<ObjectDanse> = [];
 
-    constructor(public dialogRef: MatDialogRef<AddProductDialogComponent>,@Inject(MAT_DIALOG_DATA) public product: Product, public sizeService : SizeService){
+    constructor(public utils: Utils,public dialogRef: MatDialogRef<AddProductDialogComponent>,@Inject(MAT_DIALOG_DATA) public product: Product, public sizeService : SizeService){
         
     }
     ngOnInit(){
-        console.log(this.product);
+        this.product.productBook.forEach((element:any) => {
+          if(element.endDate==null){
+            this.booksNotFinish.push(element);
+          }
+          
+        });
         this.sizeService.getAllSizes().subscribe((result:any) => { 
             this.sizes=result.data;
             console.log(this.sizes);
@@ -27,5 +34,19 @@ export class DisplayProductDialogComponent implements OnInit {
     }
     close() {
         this.dialogRef.close();
+      }
+
+      isAvailable(totalQuantity,totalBooked,requestQuantity): boolean {
+        return this.utils.isAvailable(totalQuantity,totalBooked,requestQuantity);
+      }
+    
+      isStock(totalQuantity,totalBooked):boolean{
+        return this.utils.isStock(totalQuantity,totalBooked);
+      }
+
+      addBook(product:Product){
+        this.utils.addBook(product).subscribe((result:any)=>{
+          this.dialogRef.close();
+        },err => console.error(err));;
       }
 }

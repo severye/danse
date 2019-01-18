@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogConfig } from "@angular/material";
 import { Color } from "../../color/color.object";
 import { ColorService } from "../../color/color.service";
 import { Product } from "../product.object";
@@ -11,6 +11,14 @@ import { BoxService } from "../../box/box.service";
 import { SizeService } from "../../size/size.service";
 import { SizeQuantity } from "../../shared/sizequantity.object";
 import { forEach } from "@angular/router/src/utils/collection";
+import { element } from "protractor";
+import { ActivatedRoute } from "@angular/router";
+import { ProductService } from "../product.service";
+import { PictureService } from "../../picture/picture.service";
+import { Picture } from "../../picture/picture.object";
+import { Type } from "../../type/type.object";
+import { SuperTypeService } from "../../supertype/supertype.service";
+import { CloseDialogComponent } from "../../close-dialog/close-dialog.component";
 
 @Component({
     selector: 'add-product-dialog',
@@ -23,7 +31,8 @@ export class AddProductDialogComponent implements OnInit {
     boxes : Array<ObjectDanse> = [];
     kinds : Array<ObjectDanse> = [];
     categories : Array<ObjectDanse> = [];
-    types : Array<ObjectDanse> = [];
+    types : Array<Type> = [];
+    superTypes : Array<ObjectDanse> = [];
     sizes : Array<ObjectDanse> = [];
     sizesNotAttributed : Array<ObjectDanse>=[];
     sizesQuantities : Array<SizeQuantity> = [];
@@ -33,18 +42,24 @@ export class AddProductDialogComponent implements OnInit {
     allSizesAttributed : boolean;
     htmlText: string;
     path: Array<string>;
+    paths: Array<string>;
     unequalQuantity : boolean;
+    picturesToDelete : Array<String>;
     constructor(
         public dialogRef: MatDialogRef<AddProductDialogComponent>,
         public kindService : KindService,
         public categoryService : CategoryService,
         public typeService : TypeService,
+        public superTypeService : SuperTypeService,
         public boxService : BoxService,
         public sizeService : SizeService,
         public colorService: ColorService,
-        @Inject(MAT_DIALOG_DATA) public data: Product) {}
+        public productService : ProductService,
+        public pictureService : PictureService,
+        @Inject(MAT_DIALOG_DATA) public data: Product, public dialog: MatDialog) {}
     
       ngOnInit(){
+        
         this.colorService.getAllColors().subscribe((result:any) => { 
           this.colors=result.data;
         },err => console.error(err));
@@ -53,8 +68,8 @@ export class AddProductDialogComponent implements OnInit {
           this.kinds=result.data;
         },err => console.error(err));
 
-        this.typeService.getAllTypes().subscribe((result:any) => { 
-          this.types=result.data;
+        this.superTypeService.getAllSuperTypes().subscribe((result:any) => { 
+          this.superTypes=result.data;
         },err => console.error(err));
 
         this.categoryService.getAllCategories().subscribe((result:any) => { 
@@ -68,11 +83,20 @@ export class AddProductDialogComponent implements OnInit {
         
         
         this.path = new Array<string>();
+        this.paths = new Array<string>();
         if(this.data != null){
           this.product = this.data;
-          if(this.product.picture!=null){
-            this.path.push("http://localhost:8080/images/"+this.product.picture);
+          
+          if(this.product.type!=null && this.product.type.superType.id!=null){     
+            this.changeOnSuperType();
           }
+          if(this.product.picture!=null){
+            this.path.push(encodeURI(this.product.picture));
+          }
+          this.product.pictures.forEach((element:Picture)=>{
+            this.paths.push(encodeURI(element.link));
+          });
+          
           this.sizeService.getAllSizes().subscribe((result:any) => { 
             this.sizes=result.data;
             this.getSizesNotAttributed();
@@ -100,13 +124,18 @@ export class AddProductDialogComponent implements OnInit {
           this.product.box = new ObjectDanse();
         }
         if(this.product.type == null){
-          this.product.type  = new ObjectDanse();
+          this.product.type  = new Type();
+          this.product.type.superType = new ObjectDanse();
         }
         if(this.product.sizeQuantities == null){
           this.product.sizeQuantities  = new Array<SizeQuantity>();
         }
+        if(this.product.pictures==null){
+          this.product.pictures = new Array<Picture>();
+        }
         this.show=true;
         this.newSizeQuantity = new SizeQuantity();
+        this.picturesToDelete = new Array<String>();
         this.changeQuantity();
       }
       getSizesNotAttributed(){
@@ -133,6 +162,12 @@ export class AddProductDialogComponent implements OnInit {
           }
           this.product.sizeQuantities.push(this.newSizeQuantity);
         }
+        this.picturesToDelete.forEach((element:any)=>{
+          this.pictureService.deletePicture(element).subscribe(element =>{
+                
+          });
+        });
+       
         this.dialogRef.close(this.product);
       }
       addRow() {
@@ -149,7 +184,25 @@ export class AddProductDialogComponent implements OnInit {
         this.product.picture=file.file.name;
       }
       onRemoved(file){
-        this.product.picture="";
+        this.product.picture=null;
+      }
+
+      onUploadPicturesFinished(file){
+        var picture = new Picture();
+        picture.link=file.file.name;
+        this.product.pictures.push(picture);
+      }
+      onRemovedPictures(file){
+        this.product.pictures.forEach((element:Picture)=>{
+          if(element.link==decodeURI(file.file.name)){
+            if(element.id!=null){
+              this.picturesToDelete.push(element.id);
+            }else{
+              var indexOf = this.product.pictures.indexOf(file.file.name);
+              this.product.pictures.splice(indexOf,1);
+            }
+          }
+        })
       }
       onUploadStateChanged(state: boolean){
         if(state){
@@ -158,6 +211,35 @@ export class AddProductDialogComponent implements OnInit {
           this.show=true;
         }
       }
+      changeOnSuperType(){
+        this.typeService.getAllTypeBySuperType(this.product.type.superType.id).subscribe((result:any) => { 
+          this.types=result.data;
+        }
+        ,err => console.error(err));;
+      }
+      deleteDialog(id){
+        let object = new ObjectDanse();
+        object.id=id;
+        object.name="ce produit";
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = false;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data=object;
+        dialogConfig.disableClose=true;
+        let dialogRef = this.dialog.open(CloseDialogComponent,dialogConfig);
+    
+        dialogRef.afterClosed().subscribe(result => {
+         if(result !=null){
+           this.delete(result.id);
+         }
+        });
+      }
+
+      delete(id){    
+        this.productService.deleteProduct(id).subscribe(result =>{
+        },err => console.error(err));  
+      }
+
       changeQuantity(){
         if(this.product==null || this.product.totalQuantity== null || this.product.sizeQuantities==null || (this.product.sizeQuantities.length==0 && this.newSizeQuantity.quantity==null)){
           this.unequalQuantity=false;

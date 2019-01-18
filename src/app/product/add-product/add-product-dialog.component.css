@@ -16,3 +16,9 @@ input[type="number"]{
 div{
     margin: 5px;
 }
+#productButtons div{
+    margin:0;
+}
+#productButtons .glyphicon{
+    font-size:10px;
+}

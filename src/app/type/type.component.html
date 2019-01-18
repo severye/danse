@@ -1,0 +1,41 @@
+<div id="loading" *ngIf="wait">
+    <img id="loading-image" src="/assets/loading.gif" alt="Loading..." />
+</div>
+<div id="content" class="padding-10">
+    <h3>{{title}}</h3>
+
+    <div class="tab-content alert alert-info " >
+        <div class="tab-pane active text-center" *ngIf="objects.length!=0">
+            <div id="objects" class="table">
+                <div *ngFor="let object of objects">
+                    <div class="centrer-vertical mid-col name text-left">{{object.name}} - <span class="supertype">{{object.superType?.name}}</span></div>
+                    <div class="centrer-vertical mid-col">
+                        <button class="btn btn-small btn-primary" (click)="openDialog(object)">
+                            <span class="computer">Modifier</span>
+                            <span class="glyphicon glyphicon-pencil mobile"></span>
+                        </button>
+                    </div>
+                    <div class="centrer-vertical mid-col" > 
+                        <button *ngIf="object.id" class="btn btn-small btn-danger ng-scope ng-binding status-suspended" (click)="deleteDialog(object.id)">
+                            <span class="computer">Supprimer</span>
+                            <span class="mobile glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="tab-pane active col-md-6 noObject text-center" *ngIf="objects.length==0">
+            {{noneObject}}
+        </div>
+        <form class="addObject text-center ">
+            <input type="text" [(ngModel)]="typeAdd.name" required name="name"/>
+            <select [(ngModel)]="typeAdd.idSuperType" name="supertype" required >
+                <option *ngFor="let superType of superTypes" [ngValue]="superType.id" >{{superType.name}}</option>
+            </select>
+            <button (click)="add()" class="btn btn-success ng-scope ng-binding margin-10" >
+                Ajouter
+            </button>
+        </form>
+    </div>
+</div>

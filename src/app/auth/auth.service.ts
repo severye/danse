@@ -35,7 +35,6 @@ export class AuthService {
     this.lock.on('authenticated', (authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        this.router.navigate(['/']);
       }
     });
     this.lock.on('authorization_error', (err) => {
@@ -64,7 +63,6 @@ export class AuthService {
             return;
           }
           this.setSession(authResult);
-          this.router.navigate(['/']);
         });
     });
   }
@@ -76,7 +74,9 @@ export class AuthService {
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('name', authResult.idTokenPayload.email);
-    console.log(authResult);
+    console.log(localStorage.getItem('access_token'));   
+    
+    this.router.navigate(['/search']); 
     //console.log(localStorage.getItem('access_token'));
   }
 

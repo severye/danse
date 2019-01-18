@@ -1,17 +1,25 @@
-<div>
-<h3>Mes réservations</h3>
-<div *ngFor="let book of books" class="alert-info alert row text-center">
-  <div class="centrer-vertical padding-10 ">
-      <img class="text-center" *ngIf="book.product?.picture" src="http://localhost:8080/images/{{book.product.picture}}"/>
-      <img *ngIf="!book.product?.picture" src="../../../assets/images.jpg"/>
-  </div>
-  <div class="centrer-vertical padding-10 text-left">
-      <span>Costume : {{book.product?.name}}</span><br/>
-      <span>Quantité : {{book.quantity}}</span><br/>
-      <span>Réservé le : {{book.startDate | date : "dd/MM/yyyy HH:mm"}}</span>
-  </div>
-  <div class="padding-10 centrer-vertical" >
-      <button class="btn btn-danger" (click)="deleteBook(book)">Terminer</button>
-  </div>
+<div id="loading" *ngIf="wait">
+    <img id="loading-image" src="/assets/loading.gif" alt="Loading..." />
 </div>
+<div class="padding-10" id="content">
+<h3>Mes réservations</h3>
+<div *ngIf="books?.length>0">
+    <div *ngFor="let book of books" class="alert-info alert row text-center">
+        <div class="text-center edit"><a href="/product/{{book.product.id}}" class="btn btn-link text-left" target="_blanck"><span class="glyphicon glyphicon-edit"></span>Modifier le costume</a></div>
+        <div class="centrer-vertical padding-10 ">
+            <img class="text-center" *ngIf="book.product?.picture" src="{{book.product.picture}}"/>
+            <img *ngIf="!book.product?.picture" src="../../../assets/images.jpg"/>
+        </div>
+        <div class="centrer-vertical padding-10 text-left">
+            <span>Costume : {{book.product?.name}}</span><br/>
+            <span>Malle : {{book.product?.box?.name}}</span><br/>
+            <span>Quantité : </span><span *ngIf="book.quantity>0">{{book.quantity}}</span><span *ngIf="book.quantity<0" class="noObject">Tous (pas de quantité renseignée sur ce produit)</span><br/>
+            <span>Réservé le : {{book.startDate | date : "dd/MM/yyyy HH:mm"}}</span>
+        </div>
+        <div class="padding-10 centrer-vertical" >
+            <button class="btn btn-danger" (click)="deleteBook(book)">Terminer</button>
+        </div>
+    </div>
+</div>
+<div class="noObject" *ngIf="books?.length==0">Aucune réservation en cours</div>
 </div>

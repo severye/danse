@@ -1,3 +1,32 @@
 img{
     width: 150px;
 }
+.mini{
+    max-width:35px;
+    max-height:35px;
+    margin:5px 2px;
+}
+.mid-col{
+    width:200px;
+}
+.margin-btns{
+    margin: 0px 10px;
+}
+.margin-right-5{
+    margin-right: 5px;
+}
+@media screen and (min-width: 768px){
+
+    .btn-width{
+        width : 91px;
+    }
+}
+@media screen and (max-width: 767px){
+
+    .btn-width{
+        width : 41px;
+    }
+    #content{
+        text-align: center;
+    }
+}

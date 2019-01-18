@@ -1,0 +1,9 @@
+
+<h4 mat-dialog-title>Attention</h4> 
+<mat-dialog-content>
+    <span>Voulez vous supprimer {{data.name}}?</span>
+</mat-dialog-content>
+<mat-dialog-actions>
+        <div class="left wMiddle"><button mat-dialog-close class="btn btn-small btn-light" (click)="close()">Fermer</button></div>
+        <div class="right wMiddle"><button class="btn btn-danger btn-small right "(click)="delete()">Supprimer</button></div>
+</mat-dialog-actions>

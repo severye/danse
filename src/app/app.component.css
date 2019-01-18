@@ -1,10 +1,6 @@
 #connexion,#search,#manage,#book{
     margin-top: 16px;
 }
-#header a{
-    cursor: pointer;
-    color: #303030
-}
 #header h1{
     margin: 10px 0;
 }
