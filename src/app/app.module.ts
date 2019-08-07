@@ -44,12 +44,14 @@ import { SupertypeComponent } from './supertype/supertype.component';
 import { SuperTypeService } from './supertype/supertype.service';
 import { TypeDialogComponent } from './type/type-dialog/type-dialog.component';
 import { BoxManagementComponent } from './box/box-management/box-management.component';
+import { CatalogComponent } from './catalog/catalog.component';
 @NgModule({
   declarations: [
     AppComponent, CallbackComponent,BoxComponent,ObjectDialogComponent,DisplayProductDialogComponent,CategoryComponent,KindComponent,SizeComponent,
     TypeComponent,ColorComponent,ColorDialogComponent,ProductComponent,AddProductDialogComponent, SearchComponent, BookComponent, CloseDialogComponent,
     TypeDialogComponent,BoxManagementComponent,
-    SupertypeComponent
+    SupertypeComponent,
+    CatalogComponent
   ],
   imports: [
     BrowserModule,AppRoutingModule,HttpClientModule,FormsModule,ImageUploadModule.forRoot(),
