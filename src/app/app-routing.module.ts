@@ -14,9 +14,10 @@ import { BookComponent } from './book/book.component';
 import { AddProductDialogComponent } from './product/add-product/add-product-dialog.component';
 import { SupertypeComponent } from './supertype/supertype.component';
 import { BoxManagementComponent } from './box/box-management/box-management.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  {path: 'box', component : BoxComponent, canActivate: [AuthGuard]},
+      {path: 'box', component : BoxComponent, canActivate: [AuthGuard]},
       {path: 'category', component : CategoryComponent, canActivate: [AuthGuard]},
       {path: 'product', component : ProductComponent, canActivate: [AuthGuard]},
       {path: 'kind', component : KindComponent, canActivate: [AuthGuard]},
