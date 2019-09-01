@@ -30,7 +30,7 @@
         </div>
         <form class="addObject text-center ">
             <input type="text" [(ngModel)]="typeAdd.name" required name="name"/>
-            <select [(ngModel)]="typeAdd.idSuperType" name="supertype" required >
+            <select [(ngModel)]="typeAdd.superType" name="supertype" required >
                 <option *ngFor="let superType of superTypes" [ngValue]="superType.id" >{{superType.name}}</option>
             </select>
             <button (click)="add()" class="btn btn-success ng-scope ng-binding margin-10" >

@@ -4,9 +4,9 @@ import { ObjectDanse } from '../shared/objectDanse';
 import { TypeService } from './type.service';
 import { ObjectDialogComponent } from '../object-dialog/object-dialog.component';
 import { CloseDialogComponent } from '../close-dialog/close-dialog.component';
-import { Type } from './type.object';
 import { SuperTypeService } from '../supertype/supertype.service';
 import { TypeDialogComponent } from './type-dialog/type-dialog.component';
+import { Type } from './type.object';
 
 @Component({
   selector: 'app-type',
