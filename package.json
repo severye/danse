@@ -2,11 +2,9 @@
   "name": "danse-angular2",
   "version": "0.0.0",
   "license": "MIT",
-  "main":"server.js",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
-    "postinstall": "ng build --aot --prod",
+    "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -44,8 +42,7 @@
     "popper.js": "^1.14.3",
     "rxjs": "^5.5.6",
     "xml2js": "^0.4.19",
-    "zone.js": "^0.8.19",
-    "typescript": "~2.5.3"
+    "zone.js": "^0.8.19"
   },
   "devDependencies": {
     "@angular/cli": "~1.7.3",

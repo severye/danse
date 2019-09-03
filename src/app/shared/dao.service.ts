@@ -16,8 +16,12 @@ export class DaoService{
     }
     getHeaders(){
         let httpOptionsAuth = {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json','authorization' : 'Bearer ' +  localStorage.getItem('access_token') })
-        };;
+            headers: new HttpHeaders({ 
+                'Content-Type': 'application/json',
+                'Authorization' : 'Bearer ' +  localStorage.getItem('access_token')
+            })
+        };        
+        console.log(httpOptionsAuth.headers);   
         return httpOptionsAuth;
     }
     constructor(private httpClient: HttpClient){
