@@ -34,7 +34,7 @@
     "bootstrap-toggle": "^2.2.2",
     "core-js": "^2.4.1",
     "express": "^4.17.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jspdf": "^1.5.3",
     "ngx-color-picker": "^5.3.8",
     "ngx-xml2json": "^1.0.2",
