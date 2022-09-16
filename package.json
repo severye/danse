@@ -29,7 +29,7 @@
     "angular2-image-upload": "^1.0.0-rc.1",
     "auth0": "^2.9.1",
     "auth0-lock": "^11.5.2",
-    "bootstrap": "^4.1.0",
+    "bootstrap": "^4.3.1",
     "bootstrap-select": "^1.13.1",
     "bootstrap-toggle": "^2.2.2",
     "core-js": "^2.4.1",
